@@ -34,8 +34,8 @@ class ValueDisplay:
 	# initialization
 	def __init__(self, container):
 		self.container = container
-		self.right = pygame.image.load("images/right_arrow.png")
-		self.left = pygame.image.load("images/left_arrow.png")
+		self.right = pygame.image.load("../images/right_arrow.png")
+		self.left = pygame.image.load("../images/left_arrow.png")
 	
 	# render
 	def render(self):
