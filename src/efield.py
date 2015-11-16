@@ -1,7 +1,8 @@
 import pygame
 from math import *
 from container import *
-from extmath import *
+from petitools.extmath.physics import *
+from petitools.extmath.vector import *
 
 # class contains charges and renders efield
 class ElectricField:
@@ -13,18 +14,37 @@ class ElectricField:
 		
 	# render
 	def render(self):
+		screen = self.container.get_screen()
+		e_vecs = []
+		avg = 0.0
 		
-		# render field lines
-		line_color = (10, 10, 240)
+		# add values of individual vectors to list
 		for x in range(-50, 1100, 16):
 			for y in range(10, 700, 16):
 				e_vec = self.efield_vec((x, y))
-				i, j = e_vec.get_normalized().get_values()
-				
-				pos_1 = (x, y)
-				pos_2 = (x + i * 12, y + j * 12)
-				
-				pygame.draw.line(self.container.get_screen(), line_color, pos_1, pos_2, 1)
+				e_vecs.append((e_vec, (x, y)))
+		
+		# find average magnitude of e field vector
+		for e, pos in e_vecs:
+			avg += e.get_magnitude()
+		avg /= len(e_vecs)
+		
+		# render field lines		
+		for e, pos in e_vecs:
+			x, y = pos
+			i, j = e.get_normalized().get_components()
+			
+			# find end points of vector
+			pos_1 = (x, y)
+			pos_2 = (x + i * 12, y + j * 12)
+			
+			# set whiteness depending on strength of vector
+			rgb = e.get_magnitude() / avg * 255
+			if rgb > 255: rgb = 255
+			
+			# draw to screen
+			line_color = (rgb, rgb, rgb)
+			pygame.draw.line(screen, line_color, pos_1, pos_2, 1)
 		
 		# render charges
 		for c in self.charges:
@@ -45,24 +65,13 @@ class ElectricField:
 	
 	# gives efield vector at location	
 	def efield_vec(self, pos):
+		net_vec = Vector(0, 0)
 		vecs = []
+		n = 0
 		
 		# create list of efield vectors
 		for c in self.charges:
-			x1, y1 = pos
-			x2, y2 = c.get_position()
-			
-			pos_vec = Vector(x2 - x1, y2 - y1)
-			r = pos_vec.magnitude()
-			
-			f_mag = 8.98 * 10 ** 9 * abs(c.get_charge()) / r ** 2
-			angle = pos_vec.direction()
-			
-			vec = Vector(-f_mag * sin(angle), -f_mag * cos(angle))
-			vecs.append(vec)
-			
-		net_vec = Vector(0, 0)
-		n = 0
+			vecs.append(efield_vector(c.get_charge(), pos, c.get_position()))
 		
 		# calculate net efield vector
 		for f in vecs:

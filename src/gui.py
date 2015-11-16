@@ -40,8 +40,8 @@ class ValueDisplay:
 	# render
 	def render(self):
 		screen = self.container.get_screen()
-		screen.blit(self.left, (5, 5))
-		screen.blit(self.right, (100, 5))
+		#screen.blit(self.left, (5, 5))
+		#screen.blit(self.right, (100, 5))
 		
 	# update
 	def update(self):

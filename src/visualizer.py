@@ -23,10 +23,10 @@ menu = Menu(container)
 efield = ElectricField(container)
 
 # test charges (for experimental purposes)
-efield.add_charge(Charge(container, (200, 200), 1))
-efield.add_charge(Charge(container, (600, 200), -1))
-efield.add_charge(Charge(container, (200, 600), -1))
-efield.add_charge(Charge(container, (600, 600), 1))
+efield.add_charge(Charge(container, (400, 250), 1))
+efield.add_charge(Charge(container, (600, 250), -3))
+efield.add_charge(Charge(container, (400, 450), -3))
+efield.add_charge(Charge(container, (600, 450), 1))
 
 # add objects to container
 container.add_object(efield)

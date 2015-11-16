@@ -1,6 +1,6 @@
 # Description:
-# extmath.py contains functions and classes
-# for extra mathematical calculations
+# vector.py contains functions and classes
+# for vector calculations
 # 
 # Author:
 # Calvin Yeung (dbydt)
@@ -16,19 +16,20 @@ class Vector:
 		self.y = y
 	
 	# get components in tuple
-	def get_values(self):
+	def get_components(self):
 		return (self.x, self.y)
 	
-	# normalized to unit vector
+	# normalized to unit vector in direction of vector
 	def get_normalized(self):
-		return Vector(self.x / self.magnitude(), self.y / self.magnitude())
+		mag = self.get_magnitude()
+		return Vector(self.x / mag, self.y / mag)
 	
 	# magnitude only
-	def magnitude(self):
+	def get_magnitude(self):
 		return sqrt(self.x ** 2 + self.y ** 2)
 	
 	# angle formed by vector	
-	def direction(self):
+	def get_direction(self):
 		return atan2(self.x, self.y)
 	
 	# add function
