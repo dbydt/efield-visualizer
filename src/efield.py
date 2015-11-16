@@ -2,7 +2,7 @@ import pygame
 from math import *
 from container import *
 from petitools.extmath.physics import *
-from petitools.extmath.vector import *
+from petitools.extmath.number import *
 
 # class contains charges and renders efield
 class ElectricField:

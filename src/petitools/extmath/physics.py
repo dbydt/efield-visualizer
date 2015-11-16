@@ -6,7 +6,7 @@
 # Calvin Yeung (dbydt)
 
 from math import *
-from vector import *
+from number import *
 
 # constants
 coulomb_const = 8.98 * 10 ** 9
