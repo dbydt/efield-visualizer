@@ -6,10 +6,14 @@
 # Calvin Yeung (dbydt)
 
 import pygame
+from pygame.locals import *
 from container import *
+from petitools.extmath.number import *
 
 # class for individual charges
 class Charge:
+	
+	# initialization
 	def __init__(self, container, pos, charge):
 		self.container = container
 		self.pos = pos
@@ -30,9 +34,12 @@ class Charge:
 		# draw point charge
 		pygame.draw.circle(self.container.get_screen(), color, self.pos, 10, 0)
 	
-	# update
+	# does not update (here for sake of polymorphism)
 	def update(self):
 		pass
+	
+	def set_position(self, pos):
+		self.pos = pos
 	
 	# returns charge	
 	def get_charge(self):
