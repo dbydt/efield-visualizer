@@ -21,9 +21,23 @@ class ChargeController:
 		self.efield = efield
 		self.charge_value = 0
 	
-	# useless render
+	# render text info
 	def render(self):
-		pass
+		screen = self.container.get_screen()
+		color = (255, 255, 255)
+		c_text = "Charge: " + str(self.charge_value) + " C"
+		
+		# Display some text
+		font = pygame.font.Font(None, 24)
+		text = font.render(c_text, 1, color)
+		textpos = (20, 20)
+		screen.blit(text, textpos)
+		
+		# Display instructions
+		ins_text = "Add: Click; Remove: Ctrl + Click; Change: Up/Down"
+		r_text = font.render(ins_text, 1, color)
+		ins_pos = (600, 20)
+		screen.blit(r_text, ins_pos)
 	
 	# update
 	def update(self):
@@ -84,3 +98,8 @@ class ChargeController:
 			self.charge_value += 1
 		if pressed[K_DOWN]:
 			self.charge_value -= 1
+		
+		# update screen if pressed
+		if pressed[K_UP] or pressed[K_DOWN]:
+			self.efield.update_field()
+			self.efield.render_field()

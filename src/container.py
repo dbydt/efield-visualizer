@@ -36,3 +36,7 @@ class Container:
 	def update(self):
 		for r in self.render_objects:
 			r.update()
+	
+	# clear screen
+	def clear_screen(self):
+		self.get_screen().fill((0, 0, 0))

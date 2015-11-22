@@ -50,31 +50,34 @@ class ElectricField:
 				self.update_field()
 				self.render_field()
 			else:
-				self.container.get_screen().fill((0, 0, 0))
+				self.container.clear_screen()
 	
 	# render field only when necessary
 	def render_field(self):
 		screen = self.container.get_screen()
 		
 		# clear screen
-		self.container.get_screen().fill((0, 0, 0))
+		self.container.clear_screen()
 		
 		# render field lines		
 		for e, pos in self.field_arr:
-			x, y = pos
-			i, j = e.get_normalized().get_components()
 			
-			# find end points of vector
-			pos_1 = (x, y)
-			pos_2 = (x + i * 16, y + j * 16)
-			
-			# set whiteness depending on strength of vector
-			rgb = e.get_magnitude() / self.avg * 255
-			if rgb > 255: rgb = 255
-			
-			# draw to screen
-			line_color = (rgb, rgb, rgb)
-			pygame.draw.line(screen, line_color, pos_1, pos_2, 1)
+			# avoid division by zero
+			if e.get_magnitude() > 0:
+				x, y = pos
+				i, j = e.get_normalized().get_components()
+				
+				# find end points of vector
+				pos_1 = (x, y)
+				pos_2 = (x + i * 16, y + j * 16)
+				
+				# set whiteness depending on strength of vector
+				rgb = e.get_magnitude() / self.avg * 255
+				if rgb > 255: rgb = 255
+				
+				# draw to screen
+				line_color = (rgb, rgb, rgb)
+				pygame.draw.line(screen, line_color, pos_1, pos_2, 1)
 			
 		# render charges
 		for c in self.charges:
